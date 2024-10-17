@@ -24,6 +24,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
+
   //final List<Meal> _favoritesMeal = [];
   // Map<Filter, bool> _selectedFilters = kInitialFilters;
 
