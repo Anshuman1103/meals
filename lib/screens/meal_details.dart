@@ -13,10 +13,9 @@ class MealDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final favouriteMeals = ref.watch(favouriteMealsProvider);
     final isFavourite = favouriteMeals.contains(meal);
-    
+
     return Scaffold(
         appBar: AppBar(
           title: Text(meal.title),
@@ -33,18 +32,33 @@ class MealDetails extends ConsumerWidget {
                   ),
                 );
               },
-              icon: Icon(isFavourite ? Icons.star : Icons.star_border),
+              icon: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                transitionBuilder: (child, animation) {
+                  return RotationTransition(
+                    turns: Tween<double>(begin: 0.6, end: 1).animate(animation),
+                    child: child,
+                  );
+                },
+                child: Icon(
+                  isFavourite ? Icons.star : Icons.star_border,
+                  key: ValueKey(isFavourite),
+                ),
+              ),
             ),
           ],
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network(
-                meal.imageUrl,
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              Hero(
+                tag: meal.id,
+                child: Image.network(
+                  meal.imageUrl,
+                  height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(
                 height: 20,
